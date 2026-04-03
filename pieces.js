@@ -1,13 +1,15 @@
 // Récupération des pièces depuis le fichier JSON
 const reponse = await fetch("pieces-autos.json");
-const pieces = await reponse.json();
+const pieces = await fetch("pieces-autos.json").then(pieces => pieces.json());
 
 const article = pieces[0];
 
 
 
-for (let i = 0; i < pieces.length; i++) {
- 
+// Fonction qui génère toute la page web
+function genererPieces(pieces) {
+  for (let i = 0; i < pieces.length; i++) {
+       
 // Récupération de l'élément du DOM qui accueillera les fiches
 const sectionFiches = document.querySelector(".fiches");
 // Création d’une balise dédiée à une pièce automobile
@@ -37,13 +39,12 @@ pieceElement.appendChild(categorieElement);
 pieceElement.appendChild(descriptionElement);
 pieceElement.appendChild(disponibiliteElement);
 
-
-
-
-
-
+  }
  
 }
+ 
+// Premier affichage de la page
+genererPieces(pieces);
 
 
 // Gestion des boutons
@@ -55,7 +56,9 @@ boutonTrier.addEventListener("click", function () {
   piecesOrdonnees.sort(function (a, b) {
     return a.prix - b.prix;
   });
-
+ // Effacement de l'écran et regénération de la page
+  document.querySelector(".fiches").innerHTML = "";
+  genererPieces(piecesOrdonnees);
   console.log(piecesOrdonnees);
 });
 
@@ -68,7 +71,9 @@ boutonTrierDesc.addEventListener("click", function () {
   piecesOrdonnees.sort(function (a, b) {
     return b.prix - a.prix;
   });
-
+   // Effacement de l'écran et regénération de la page
+  document.querySelector(".fiches").innerHTML = "";
+  genererPieces(piecesOrdonnees);
   console.log(piecesOrdonnees);
 });
 
@@ -79,6 +84,9 @@ boutonFiltrer.addEventListener("click", function () {
    const piecesFiltrees = pieces.filter(function (piece) {
        return piece.prix <= 35;
    });
+    // Effacement de l'écran et regénération de la page
+  document.querySelector(".fiches").innerHTML = "";
+  genererPieces(piecesFiltrees);
   console.log(piecesFiltrees);
 });
 
@@ -88,6 +96,9 @@ boutonFiltrerSan.addEventListener("click", function () {
    const piecesFiltrees = pieces.filter(function (piece) {
        return piece.description;
    });
+     // Effacement de l'écran et regénération de la page
+  document.querySelector(".fiches").innerHTML = "";
+  genererPieces(piecesFiltrees);
   console.log(piecesFiltrees);
 
 });
@@ -138,6 +149,18 @@ for(let i=0; i < nomsDisp.length ; i++){
 document.querySelector('.disponible')
    .appendChild(disponibleElements)
 
+ 
 
 
 
+const rngprixbar = document.querySelector(".rng-prix");
+rngprixbar.addEventListener('input', function(){
+   const piecesFiltrees = pieces.filter(function (piece) {
+       return piece.prix <= rngprixbar.value;
+   });
+     // Effacement de l'écran et regénération de la page
+  document.querySelector(".fiches").innerHTML = "";
+  genererPieces(piecesFiltrees);
+  console.log(piecesFiltrees);
+
+});
