@@ -92,5 +92,52 @@ boutonFiltrerSan.addEventListener("click", function () {
 
 });
 
+//Liste nom des pieces
+const noms = pieces.map(piece => piece.nom);
+for(let i = pieces.length -1 ; i >= 0; i--){
+   if(pieces[i].prix > 35){
+       noms.splice(i,1)
+   }
+}
+console.log(noms)
+
+
+//Création de la liste
+const abordablesElements = document.createElement('ul');
+//Ajout de chaque nom à la liste
+for(let i=0; i < noms.length ; i++){
+   const nomElement = document.createElement('li');
+   nomElement.innerText = noms[i] ;
+   abordablesElements.appendChild(nomElement)
+}
+// Ajout de l'en-tête puis de la liste au bloc résultats filtres
+document.querySelector('.abordables')
+   .appendChild(abordablesElements)
+
+
+   //Liste nom des pieces
+const nomsDisp = pieces.map(piece => piece.nom);
+const prix = pieces.map(piece => piece.prix);
+for(let i = pieces.length -1 ; i >= 0; i--){
+   if(pieces[i].disponibilite == false){
+       nomsDisp.splice(i,1)
+       prix.splice(i,1)
+   }
+}
+
+
+//Création de la liste
+const disponibleElements = document.createElement('ul');
+//Ajout de chaque nom à la liste
+for(let i=0; i < nomsDisp.length ; i++){
+   const nomElement = document.createElement('li');
+   nomElement.innerText = `${nomsDisp[i]} - ${prix[i]}  € `;
+   disponibleElements.appendChild(nomElement)
+}
+// Ajout de l'en-tête puis de la liste au bloc résultats filtres
+document.querySelector('.disponible')
+   .appendChild(disponibleElements)
+
+
 
 
