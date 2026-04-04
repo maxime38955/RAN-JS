@@ -1,3 +1,5 @@
+import { ajoutListenersAvis } from "./avis.js";
+
 // Récupération des pièces depuis le fichier JSON
 const reponse = await fetch("pieces-autos.json");
 const pieces = await fetch("pieces-autos.json").then(pieces => pieces.json());
@@ -21,6 +23,10 @@ const prixElement = document.createElement("p");
 const categorieElement = document.createElement("p");
 const descriptionElement = document.createElement("p");
 const disponibiliteElement = document.createElement("p");
+const avisBouton = document.createElement("button");
+avisBouton.dataset.id = article.id;
+avisBouton.textContent = "Afficher les avis";
+
 // On accède à l’indice i de la liste pieces pour configurer la source de l’image.
 imageElement.src = pieces[i].image;
 nomElement.innerText = pieces[i].nom;
@@ -39,7 +45,11 @@ pieceElement.appendChild(categorieElement);
 pieceElement.appendChild(descriptionElement);
 pieceElement.appendChild(disponibiliteElement);
 
+pieceElement.appendChild(avisBouton);
+
+
   }
+  ajoutListenersAvis();
  
 }
  
@@ -164,3 +174,4 @@ rngprixbar.addEventListener('input', function(){
   console.log(piecesFiltrees);
 
 });
+
